@@ -3,6 +3,7 @@ import pickle
 import random
 from sets import Set
 import sys
+import pprint
 
 notes = pickle.load(open(sys.argv[1], 'r'))
 k = int(sys.argv[2])
@@ -19,15 +20,21 @@ for i in range(0, len(notes)):
         my_set.add(notes[j+1])
     dictionary[this_value] = my_set
 
-print dictionary
+for element in dictionary:
+  dictionary[element] = list(dictionary[element])
 
 start = random.choice(list(dictionary.keys()))
 output_list = []
 
 for i in range(0, k):    
   my_note = random.choice(list(dictionary[start]))
-  print my_note
   output_list.append(my_note)
   start = my_note[2]
+  if random.randint(0, 100) < 5:
+    start = random.choice(list(dictionary.keys()))
        
-print output_list
+pprint.pprint(output_list)
+
+pickle.dump(output_list, open('MarkovDisBitch.p', 'wb'))
+
+
