@@ -26,10 +26,16 @@ def gen_tempo_track(deets, end_tick):
   if key_sig is not None:
     key_sig.tick = 0
     track.append(key_sig)
+
   if tempos:
-    tempo = random.choice(tempos)
-    tempo.tick = 0
-    track.append(tempo)
+    t = 0
+    while t < end_tick:
+      tick = random.randint(0, 10000)
+      tempo = random.choice(tempos)
+      tempo.tick = tick
+      track.append(tempo)
+      t += tick
+
   track.append(midi.EndOfTrackEvent(tick=end_tick))
   return track
 
