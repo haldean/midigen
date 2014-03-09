@@ -6,8 +6,8 @@ import sys
 import numpy as np
 
 
-notes = pickle.load(open('BossThemeMedley.p', 'r'))
-k = int(500)
+notes = pickle.load(open(sys.argv[1], 'r'))
+k = int(sys.argv[2])
 
 dictionary = {}
 
