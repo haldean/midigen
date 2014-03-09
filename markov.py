@@ -39,9 +39,9 @@ start = random.choice(list(dictionary.keys()))
 output_list = []
 
 for i in range(0, k):   
-  my_tuple = [np.random.normal(tick_mean, tick_standardDev, 1)[0]]
+  my_tuple = [max(0, int(np.random.normal(tick_mean, tick_standardDev, 1)[0]))]
   my_note = random.choice(list(dictionary[start]))
-  my_tuple.append(my_note[1:])
+  my_tuple.extend(my_note[1:])
   output_list.append(my_tuple)
   start = my_note[2]
   if random.randint(0, 100) < 5:
