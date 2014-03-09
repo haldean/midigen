@@ -10,6 +10,7 @@ def gen_tempo_track(deets, end_tick):
   time_sig = None
   key_sig = None
   tempos = []
+  control = []
   for track in deets:
     for ev in track:
       if isinstance(ev, midi.TimeSignatureEvent):
@@ -18,6 +19,10 @@ def gen_tempo_track(deets, end_tick):
         key_sig = ev
       elif isinstance(ev, midi.SetTempoEvent):
         tempos.append(ev)
+      elif isinstance(ev, midi.ControlChangeEvent):
+        control.append(ev)
+      elif isinstance(ev, midi.ProgramChangeEvent):
+        control.append(ev)
 
   track = midi.Track()
   if time_sig is not None:
@@ -26,6 +31,7 @@ def gen_tempo_track(deets, end_tick):
   if key_sig is not None:
     key_sig.tick = 0
     track.append(key_sig)
+  track.extend(control)
 
   if tempos:
     t = 0
@@ -47,10 +53,12 @@ def gen_track(deets, evs, initial_tick=5):
   events = []
   t = initial_tick
   for ev in evs:
-    tick, off_tick, note, velocity = ev
+    tick, off_tick, note, velocity, channel = ev
     on = midi.NoteOnEvent()
+    on.channel = channel
     on.data = [note, velocity]
     off = midi.NoteOffEvent()
+    off.channel = channel
     off.data = [note, 0]
 
     t += tick
