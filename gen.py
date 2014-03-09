@@ -15,6 +15,10 @@ class ev(object):
   def is_tempo(self):
     return self.tempo is not None
 
+  def __str__(self):
+    return str((self.tick, self.off_tick, self.note, self.velocity, self.tempo))
+  __repr__ = __str__
+
 def track_to_ev(track):
   evs = []
   for i in range(len(track)):
