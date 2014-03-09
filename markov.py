@@ -3,7 +3,6 @@ import pickle
 import random
 from sets import Set
 import sys
-import pprint
 
 notes = pickle.load(open(sys.argv[1], 'r'))
 k = int(sys.argv[2])
@@ -33,8 +32,6 @@ for i in range(0, k):
   if random.randint(0, 100) < 5:
     start = random.choice(list(dictionary.keys()))
        
-pprint.pprint(output_list)
-
 pickle.dump(output_list, open('MarkovDisBitch.p', 'wb'))
 
 
