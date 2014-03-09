@@ -16,8 +16,8 @@ my_array = []
 for element in notes:
   my_array.append(element[0])
 
-tick_standardDev = np.std(my_array)
-tick_mean = np.mean(my_array) 
+#tick_standardDev = np.std(my_array)
+#tick_mean = np.mean(my_array) 
 #print tick_mean
 
 #print np.random.normal(tick_mean, tick_standardDev, 1)
@@ -39,7 +39,7 @@ start = random.choice(list(dictionary.keys()))
 output_list = []
 
 for i in range(0, k):   
-  my_tuple = [max(0, int(np.random.normal(tick_mean, tick_standardDev, 1)[0]))]
+  my_tuple = [random.choice(my_array)]
   my_note = random.choice(list(dictionary[start]))
   my_tuple.extend(my_note[1:])
   output_list.append(my_tuple)
