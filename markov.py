@@ -3,11 +3,24 @@ import pickle
 import random
 from sets import Set
 import sys
+import numpy as np
 
-notes = pickle.load(open(sys.argv[1], 'r'))
-k = int(sys.argv[2])
+
+notes = pickle.load(open('BossThemeMedley.p', 'r'))
+k = int(500)
 
 dictionary = {}
+
+#get parameters from normal distribution (tick values)
+my_array = []
+for element in notes:
+  my_array.append(element[0])
+
+tick_standardDev = np.std(my_array)
+tick_mean = np.mean(my_array) 
+#print tick_mean
+
+#print np.random.normal(tick_mean, tick_standardDev, 1)
 
 for i in range(0, len(notes)):
   this_value = notes[i][2]
@@ -25,13 +38,13 @@ for element in dictionary:
 start = random.choice(list(dictionary.keys()))
 output_list = []
 
-for i in range(0, k):    
+for i in range(0, k):   
+  my_tuple = [np.random.normal(tick_mean, tick_standardDev, 1)[0]]
   my_note = random.choice(list(dictionary[start]))
-  output_list.append(my_note)
+  my_tuple.append(my_note[1:])
+  output_list.append(my_tuple)
   start = my_note[2]
   if random.randint(0, 100) < 5:
     start = random.choice(list(dictionary.keys()))
        
 pickle.dump(output_list, open('MarkovDisBitch.p', 'wb'))
-
-
